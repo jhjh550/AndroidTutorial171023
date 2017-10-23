@@ -3,10 +3,14 @@ package com.example.a.t02_widget2;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -17,12 +21,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final EditText myEditText = (EditText)findViewById(R.id.myEditText);
+        myEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String str = charSequence.toString();
+                if(str.length()>10){
+                    Log.i("123", "size over error");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         Button btn = (Button) findViewById(R.id.helloBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String str = myEditText.getText().toString();
+
                 Toast.makeText(MainActivity.this,
-                        "hello world2", Toast.LENGTH_SHORT).show();
+                        str, Toast.LENGTH_SHORT).show();
             }
         });
         CheckBox myCheckBox = (CheckBox) findViewById(R.id.myCheckBox);
