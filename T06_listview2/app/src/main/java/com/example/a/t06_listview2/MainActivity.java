@@ -2,7 +2,12 @@ package com.example.a.t06_listview2;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,6 +32,37 @@ public class MainActivity extends AppCompatActivity {
 
     class MyAdapter extends BaseAdapter{
 
+        @Override
+        public int getCount() {
+            return myList.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return myList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            if(convertView == null){
+                LayoutInflater inf = getLayoutInflater();
+                convertView = inf.inflate(R.layout.item_view, null);
+            }
+            MyData myData = myList.get(position);
+
+            TextView tvTile = (TextView) convertView.findViewById(R.id.item_title);
+            TextView tvDesc = (TextView) convertView.findViewById(R.id.item_desc);
+
+            tvTile.setText(myData.title);
+            tvDesc.setText(myData.desc);
+
+            return convertView;
+        }
     }
 
     @Override
@@ -34,5 +70,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initData();
+        ListView listView = (ListView) findViewById(R.id.listView);
+        MyAdapter adapter = new MyAdapter();
+        listView.setAdapter(adapter);
     }
 }
