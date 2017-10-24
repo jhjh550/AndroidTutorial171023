@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,10 +58,11 @@ public class MainActivity extends AppCompatActivity {
 
             TextView tvTile = (TextView) convertView.findViewById(R.id.item_title);
             TextView tvDesc = (TextView) convertView.findViewById(R.id.item_desc);
+            ImageView itemIcon = convertView.findViewById(R.id.itemIcon);
 
             tvTile.setText(myData.title);
             tvDesc.setText(myData.desc);
-
+            itemIcon.setImageResource(myData.itemIcon);
             return convertView;
         }
     }
