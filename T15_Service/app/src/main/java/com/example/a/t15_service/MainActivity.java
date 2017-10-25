@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     public void onStartClick(View v){
         Intent intent = new Intent(this, MyService.class);
         startService(intent);
+
+//        MyIntentService.startActionFoo(this, "hello ", "world");
     }
     public void onStopClick(View v){
         Intent intent = new Intent(this, MyService.class);
