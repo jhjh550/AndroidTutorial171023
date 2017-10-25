@@ -7,10 +7,12 @@
     tools:context="com.example.a.t16_service2.MainActivity">
 
     <Button
+        android:background="@drawable/btn_group_pressed_holo_light"
         android:onClick="onBtnClick"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="f"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
