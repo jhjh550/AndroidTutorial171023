@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.example.a.t13_webview.MainActivity">
 
+   <ProgressBar
+       android:visibility="gone"
+       android:id="@+id/progressBar"
+       style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
    <WebView
        android:id="@+id/webView"
        android:layout_width="match_parent"
