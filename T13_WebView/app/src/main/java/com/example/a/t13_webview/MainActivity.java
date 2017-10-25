@@ -53,4 +53,13 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebChromeClient(new MyChromeClient());
         webView.loadUrl("http://www.daum.net");
     }
+
+    @Override
+    public void onBackPressed() {
+        if(webView.canGoBack()) {
+            webView.goBack();
+        }else{
+            finish();
+        }
+    }
 }
