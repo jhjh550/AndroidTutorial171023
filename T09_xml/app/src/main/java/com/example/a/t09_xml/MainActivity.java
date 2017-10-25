@@ -3,8 +3,8 @@ package com.example.a.t09_xml;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -14,10 +14,18 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    class MyPullParser extends AsyncTask<String, Void, Void>{
+    TextView textView;
+    class MyPullParser extends AsyncTask<String, Void, String>{
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            textView.setText(s);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String res = "";
             XmlPullParserFactory factory = null;
             try {
                 factory = XmlPullParserFactory.newInstance();
@@ -36,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }else if(eventType == XmlPullParser.TEXT){
                         if(bRead){
-                            Log.d("weather", xpp.getText());
+                            res += xpp.getText() + " ";
                             bRead = false;
                         }
                     }
@@ -46,13 +54,14 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return null;
+            return res;
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = (TextView) findViewById(R.id.textView);
     }
 
     public void onBtnClick(View v){
