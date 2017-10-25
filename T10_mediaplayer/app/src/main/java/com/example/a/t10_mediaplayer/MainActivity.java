@@ -1,70 +1,46 @@
 package com.example.a.t10_mediaplayer;
 
 import android.Manifest;
-import android.media.MediaPlayer;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.SeekBar;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import java.io.IOException;
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    SeekBar seekbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        seekbar = (SeekBar) findViewById(R.id.seekBar);
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
             requestPermissions(permissions,0);
         }
-    }
 
+        String path = Environment.getExternalStorageDirectory()+"/Download";
+        File dir = new File(path);
+        final String[] files = dir.list();
 
-    MediaPlayer mp = null;
-    public void onPlayClick(View v){
-        String path = Environment.getExternalStorageDirectory()
-                +"/Download/Kalimba.mp3";
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, files);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, PlayerActivity.class);
+                intent.putExtra("name", files[i]);
+                startActivity(intent);
+            }
+        });
 
-        mp = new MediaPlayer();
-        try {
-            mp.setDataSource(path);
-            mp.prepare();
-            mp.start();
-            seekbar.setMax(mp.getDuration());
-            Thread th = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while(mp != null){
-                        try {
-                            seekbar.setProgress(mp.getCurrentPosition());
-                        }catch (Exception e){
-                            seekbar.setProgress(0);
-                        }
-                    }
-                }
-            });
-            th.start();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void onStopClick(View v){
-        if( mp != null ){
-            mp.stop();
-            mp.release();
-            mp = null;
-        }
     }
 }
