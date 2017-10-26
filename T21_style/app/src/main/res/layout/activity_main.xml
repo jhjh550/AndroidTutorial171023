@@ -30,20 +30,17 @@
             android:id="@+id/btnZero"
             android:text="0"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            style="@style/RemoteButton"/>
         <Button
             android:id="@+id/btnOne"
             android:text="1"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            style="@style/RemoteButton"/>
         <Button
             android:id="@+id/btnEnter"
             android:text="enter"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            style="@style/RemoteButton"/>
     </TableRow>
 
 </TableLayout>
