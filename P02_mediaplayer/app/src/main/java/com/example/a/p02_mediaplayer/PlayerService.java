@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -33,6 +34,19 @@ public class PlayerService extends Service {
             mp.setDataSource(path);
             mp.prepare();
             mp.start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(mp != null){
+                        try {
+                            Thread.sleep(1000);
+                            Log.d("mp", "curr : "+mp.getCurrentPosition());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
