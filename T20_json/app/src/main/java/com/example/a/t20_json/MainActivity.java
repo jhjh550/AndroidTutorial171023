@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -24,6 +26,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String imgPath = "http://cdn.podbbang.com/data1/programmer/programmer-iamprogram20161211.jpg";
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+        Glide.with(this).load(imgPath).into(imageView);
+
+
+
 
         try {
             JSONArray array = new JSONArray(str);
