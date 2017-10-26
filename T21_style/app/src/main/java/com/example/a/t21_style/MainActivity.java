@@ -45,19 +45,28 @@ public class MainActivity extends AppCompatActivity {
                 number++;
             }
         }
+        TableRow row = (TableRow) tableLayout.getChildAt( tableLayout.getChildCount()-1 );
+        Button deleteButton = (Button) row.getChildAt(0);
+        Button zeroButton = (Button) row.getChildAt(1);
+        Button enterButton = (Button) row.getChildAt(2);
 
+        zeroButton.setOnClickListener(numberListener);
+        zeroButton.setText("0");
+        deleteButton.setText("delete");
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                workingTextView.setText("0");
+            }
+        });
 
-
-
-//        btnZero.setOnClickListener(numberListener);
-//        btnOne.setOnClickListener(numberListener);
-
-//        btnEnter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                selectedTextView.setText( workingTextView.getText() );
-//                workingTextView.setText("0");
-//            }
-//        });
+        enterButton.setText("enter");
+        enterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedTextView.setText( workingTextView.getText() );
+                workingTextView.setText("0");
+            }
+        });
     }
 }
