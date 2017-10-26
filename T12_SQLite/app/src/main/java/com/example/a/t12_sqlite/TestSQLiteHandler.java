@@ -46,6 +46,23 @@ public class TestSQLiteHandler {
     // 4, park, 12, incheon
     // EOF
 
+    public String select(String param){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor c = db.query("student", null, "name = ?", new String[]{param}, null, null, null);
+        String res = "";
+
+        while(c.moveToNext()){
+            int id = c.getInt( c.getColumnIndex("id") );
+            String name = c.getString( c.getColumnIndex("name") );
+            int age = c.getInt( c.getColumnIndex("age"));
+            String address = c.getString(c.getColumnIndex("address"));
+
+            res += "id : "+id+" name : "+name+" age : "+age+" address : "+address;
+            res += "\n";
+        }
+
+        return res;
+    }
     public String selectAll(){
         String res = "";
         SQLiteDatabase db = helper.getReadableDatabase();

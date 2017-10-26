@@ -17,7 +17,9 @@ public class MainActivity extends AppCompatActivity {
         dbHandler.insert("홍", 11, "부산");
         dbHandler.update("kim", 15);
 
+        String res2 = dbHandler.select("홍");
+
         String res = dbHandler.selectAll();
-        textView.setText(res);
+        textView.setText(res2);
     }
 }
