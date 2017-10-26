@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,8 +17,11 @@ public class MainActivity extends AppCompatActivity {
         selectedTextView = (TextView) findViewById(R.id.selected_textView);
         workingTextView = (TextView) findViewById(R.id.working_textView);
 
-        Button btnZero = (Button) findViewById(R.id.btnZero);
-        Button btnOne = (Button) findViewById(R.id.btnOne);
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.remote_control_tablelayout);
+
+
+//        Button btnZero = (Button) findViewById(R.id.btnZero);
+//        Button btnOne = (Button) findViewById(R.id.btnOne);
         Button btnEnter = (Button) findViewById(R.id.btnEnter);
 
         View.OnClickListener numberListener = new View.OnClickListener() {
@@ -33,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-        btnZero.setOnClickListener(numberListener);
-        btnOne.setOnClickListener(numberListener);
+//        btnZero.setOnClickListener(numberListener);
+//        btnOne.setOnClickListener(numberListener);
 
         btnEnter.setOnClickListener(new View.OnClickListener() {
             @Override
