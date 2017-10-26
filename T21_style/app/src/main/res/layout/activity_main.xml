@@ -26,7 +26,6 @@
         android:layout_width="match_parent"
         android:id="@+id/working_textView"
         android:text="0"/>
-
     <include
         android:layout_weight="1"
         layout="@layout/button_row"/>

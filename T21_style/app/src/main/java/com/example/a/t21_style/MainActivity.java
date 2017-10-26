@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,15 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        selectedTextView = (TextView) findViewById(R.id.selected_textView);
-        workingTextView = (TextView) findViewById(R.id.working_textView);
-
-        TableLayout tableLayout = (TableLayout) findViewById(R.id.remote_control_tablelayout);
-
-
-//        Button btnZero = (Button) findViewById(R.id.btnZero);
-//        Button btnOne = (Button) findViewById(R.id.btnOne);
-        Button btnEnter = (Button) findViewById(R.id.btnEnter);
 
         View.OnClickListener numberListener = new View.OnClickListener() {
             @Override
@@ -37,15 +29,35 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+
+        selectedTextView = (TextView) findViewById(R.id.selected_textView);
+        workingTextView = (TextView) findViewById(R.id.working_textView);
+
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.remote_control_tablelayout);
+
+        int number = 1;
+        for(int i=2; i<tableLayout.getChildCount()-1; i++){
+            TableRow row = (TableRow) tableLayout.getChildAt(i);
+            for(int k=0; k<row.getChildCount(); k++){
+                Button btn = (Button) row.getChildAt(k);
+                btn.setText(""+number);
+                btn.setOnClickListener(numberListener);
+                number++;
+            }
+        }
+
+
+
+
 //        btnZero.setOnClickListener(numberListener);
 //        btnOne.setOnClickListener(numberListener);
 
-        btnEnter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                selectedTextView.setText( workingTextView.getText() );
-                workingTextView.setText("0");
-            }
-        });
+//        btnEnter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                selectedTextView.setText( workingTextView.getText() );
+//                workingTextView.setText("0");
+//            }
+//        });
     }
 }
