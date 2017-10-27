@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -26,31 +25,33 @@ public class PlayerService extends Service {
         return binder;
     }
 
-    public void play(){
+    public int getCurrentPostion(){
+        if(mp == null)
+            return 0;
+
+        return mp.getCurrentPosition();
+    }
+    public void seekTo(int position){
+        if(mp != null){
+            mp.seekTo(position);
+        }
+    }
+
+    public int play(){
         String path = Environment.getExternalStorageDirectory()+
                 "/Download/Kalimba.mp3";
         mp = new MediaPlayer();
+        int duration = 0;
         try {
             mp.setDataSource(path);
             mp.prepare();
             mp.start();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while(mp != null){
-                        try {
-                            Thread.sleep(1000);
-                            Log.d("mp", "curr : "+mp.getCurrentPosition());
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
+            duration = mp.getDuration();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return duration;
     }
 
     public void stop(){

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity {
     PlayerService playerService = null;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    Boolean isDestroyed = false;
+    SeekBar seekBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,48 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},0);
         }
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if(b){
+                    if(playerService != null){
+                      playerService.seekTo(i);
+                    }
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isDestroyed == false){
+                    if(playerService != null){
+                        try {
+                            seekBar.setProgress(playerService.getCurrentPostion());
+                        }catch (Exception e){
+                            seekBar.setProgress(0);
+                        }
+                    }
+                }
+            }
+        }).start();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isDestroyed = true;
     }
 
     @Override
@@ -50,8 +95,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onPlayClick(View v){
-        if(playerService != null)
-            playerService.play();
+        if(playerService != null) {
+            int duration = playerService.play();
+            seekBar.setMax(duration);
+        }
     }
 
     public void onStopClick(View v){
