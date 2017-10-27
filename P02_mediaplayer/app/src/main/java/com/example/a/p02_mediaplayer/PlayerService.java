@@ -12,8 +12,16 @@ import java.io.IOException;
 public class PlayerService extends Service {
     MediaPlayer mp = null;
 
+    TestDBHandler dbHandler;
     public PlayerService() {
     }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        dbHandler = new TestDBHandler(this);
+    }
+
     public class MyBinder extends Binder {
         public PlayerService getService(){
             return PlayerService.this;
@@ -29,7 +37,9 @@ public class PlayerService extends Service {
         if(mp == null)
             return 0;
 
-        return mp.getCurrentPosition();
+        int current = mp.getCurrentPosition();
+        dbHandler.update("Kalimba.mp3", current);
+        return current;
     }
     public void seekTo(int position){
         if(mp != null){
@@ -46,6 +56,8 @@ public class PlayerService extends Service {
             mp.setDataSource(path);
             mp.prepare();
             mp.start();
+            int current = dbHandler.getCurrentPostion("Kalimba.mp3");
+            mp.seekTo(current);
             duration = mp.getDuration();
         } catch (IOException e) {
             e.printStackTrace();

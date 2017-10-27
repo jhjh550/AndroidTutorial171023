@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 while (isDestroyed == false){
                     if(playerService != null){
                         try {
+                            Thread.sleep(3000);
                             seekBar.setProgress(playerService.getCurrentPostion());
                         }catch (Exception e){
                             seekBar.setProgress(0);
